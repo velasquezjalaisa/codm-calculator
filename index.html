@@ -280,7 +280,13 @@
         { cp: 20,   gs: 10,   php: 11 }
     ];
 
-    let db = JSON.parse(localStorage.getItem('drawDatabase')) || {};
+    let db = JSON.parse(localStorage.getItem('drawDatabase')) || {
+    "Hot and Cold Draw": [10, 60, 180, 400, 800, 1500, 2300, 0, 0, 0],
+    "On Ice Draw": [10, 60, 180, 400, 800, 1500, 2300, 0, 0, 0],
+	"Grim Ending Mythic Drop": [20, 40, 70, 90, 190, 440, 790, 2100, 3100, 4100],
+	"Galaxy Scourge Mythic Drop": [20, 40, 70, 120, 300, 600, 900, 1600, 3300, 4500],
+	"Bitter Cold Draw": [10, 30, 60, 140, 240, 450, 750, 1500, 2700, 3800],
+};
     let adminUnlocked = false;
 
     function init() {
@@ -460,4 +466,5 @@
     init();
 </script>
 </body>
+
 </html>
