@@ -298,7 +298,7 @@
         const userChecks = document.getElementById('userChecklist');
         for(let i=1; i<=10; i++) {
             adminGrid.innerHTML += `<div><input type="number" class="admin-cp" data-idx="${i-1}" placeholder="Draw ${i}"></div>`;
-            userChecks.innerHTML += `<label class="check-item"><input type="checkbox" class="user-check" data-idx="${i-1}"><span>Draw ${i}</span></label>`;
+            userChecks.innerHTML += `<label class="check-item"><input type="checkbox" class="user-check" data-idx="${i-1}" checked><span>Draw ${i}</span></label>`;
         }
         refreshUI();
     }
@@ -472,4 +472,5 @@
 </body>
 
 </html>
+
 
