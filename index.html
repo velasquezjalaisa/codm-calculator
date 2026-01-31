@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODM Draw Calculator | Ryzen x Credx</title>
+    <style>
+        :root {
+            --teal-primary: #008080;
+            --teal-dark: #006666;
+            --teal-light: #e6f2f2;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+            --verified-blue: #1DA1F2;
+            --success: #22c55e;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-dark: #f1f5f9;
+            --text-light: #ffffff;
+            --border-color: #334155;
+            --teal-light: #134e4a;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Branding Styles */
+        .header-wrapper {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .verified-badge {
+            color: var(--verified-blue);
+            font-size: 1.2rem;
+            animation: pulse-blue 2s infinite;
+        }
+
+        @keyframes pulse-blue {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .official-logo {
+            width: 75px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .main-container { width: 100%; max-width: 500px; }
+
+        .card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        h2 { color: var(--teal-primary); font-weight: 700; margin: 0 0 20px 0; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .hidden { display: none; }
+
+        label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-dark);
+            box-sizing: border-box;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: var(--teal-light);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .check-item:hover { filter: brightness(0.95); }
+        .check-item input { width: auto; margin-right: 12px; transform: scale(1.2); }
+
+        .stats-box, .alt-box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .stats-box { background: var(--teal-primary); }
+        .alt-box { background: #475569; margin-top: 15px; }
+
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; opacity: 0.9; }
+        .stat-total { font-size: 1.8rem; font-weight: 800; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; margin-top: 10px; }
+        .breakdown { font-size: 0.72rem; color: #fff; margin-top: 8px; line-height: 1.4; border-top: 1px dashed rgba(255,255,255,0.4); padding-top: 8px; }
+
+        .btn {
+            background: var(--teal-primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 var(--teal-dark);
+            transition: all 0.1s;
+        }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--teal-dark); }
+        
+        /* Success state for button */
+        .btn.btn-success {
+            background: var(--success);
+            box-shadow: 0 4px 0 #166534;
+        }
+
+        .btn-reset { background: var(--danger); margin-top: 10px; box-shadow: 0 4px 0 #991b1b; }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-top: 10px;
+            padding: 20px;
+            background: var(--teal-light);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .footer-note a { color: var(--teal-primary); font-weight: 700; text-decoration: none; }
+        .warning-text { color: #b91c1c; font-weight: 800; display: block; margin-top: 8px; }
+
+        .mode-switch { background: var(--border-color); padding: 4px; border-radius: 10px; display: flex; gap: 4px; margin-bottom: 20px; }
+        .mode-btn { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
+        .mode-btn.active { background: var(--teal-primary); color: white; }
+
+        .template-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; background: var(--bg-color); border-radius: 8px; margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="header-wrapper">
+        <div class="brand-info">
+            <h1 class="brand-title">Ryzen Discounted Game Credits<span class="verified-badge">✔</span></h1>
+            <span class="brand-subtitle">Precision Credits Engine</span>
+        </div>
+        <img src="Logo_Default.png" alt="Ryzen Logo" class="official-logo">
+    </div>
+
+    <div class="mode-switch">
+        <button id="btnUser" class="mode-btn active" onclick="showPanel('user')">User</button>
+        <button id="btnAdmin" class="mode-btn" onclick="showPanel('admin')">Admin 🔒</button>
+        <button class="mode-btn" onclick="toggleTheme()">🌓 Mode</button>
+    </div>
+
+    <div class="main-container">
+        <div id="panelUser" class="card">
+            <h2>Draw Calculator</h2>
+            <label>Template Selection</label>
+            <select id="userSelector"></select>
+            <div id="userChecklist"></div>
+            <button class="btn" id="calcBtn" onclick="handleCalculation()">Run Calculator</button>
+            
+            <div class="stats-box">
+                <label style="color:rgba(255,255,255,0.8); font-size: 0.7rem; text-transform: uppercase;">Optimized Cost</label>
+                <div class="stat-row"><span>CP:</span> <span id="resCP">0 CP</span></div>
+                <div class="stat-row"><span>GS:</span> <span id="resGS">0 GS</span></div>
+                <div class="stat-total">₱<span id="resPHP">0.00</span></div>
+                <div id="gsBreakdown" class="breakdown">Selection results will appear here.</div>
+            </div>
+
+            <div id="altCard" class="alt-box hidden">
+                <label style="color:rgba(255,255,255,0.8); font-size: 0.7rem; text-transform: uppercase;">Alternative (Tenths Rule)</label>
+                <div class="stat-row"><span>GS:</span> <span id="altGS">0 GS</span></div>
+                <div class="stat-total">₱<span id="altPHP">0.00</span></div>
+                <div id="altBreakdown" class="breakdown">Breakdown here.</div>
+            </div>
+
+            <button class="btn btn-reset" onclick="resetCalculator()">Reset Calculator</button>
+
+            <div class="footer-note">
+                Top up your CODM CP at discounted prices only at <br><b>Ryzen Discounted Game Credits!</b><br>
+                Order now: <a href="https://m.me/ryzendiscountedgamecredits" target="_blank">m.me/ryzendiscountedgamecredits</a><br>
+                <span class="warning-text">Always look for blue check! Beware of posers.</span>
+            </div>
+
+
+	<div class="footer-note">
+ 		<b>Want a draw selection that isn’t on the list?</b><br>
+  		Email us at: ryzendiscountedgamecredits@gmail.com 
+        </div>
+
+        <div id="panelAdmin" class="card hidden">
+            <h2 style="margin:0;">Database Admin</h2>
+            <button class="btn btn-reset" style="width: auto; padding: 5px 10px; float: right;" onclick="lockAdmin()">Lock</button>
+            <div style="clear:both; padding-top:10px;"></div>
+            <label>Template Name</label>
+            <input type="text" id="adminDrawName" placeholder="e.g. Mythic Siren">
+            <label>CP Costs (1-10)</label>
+            <div class="grid-2" id="adminInputs"></div>
+            <button class="btn" onclick="saveToDb()">Save to Local DB</button>
+            <div id="adminDeleteList" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+<script>
+    const TIERS = [
+        { cp: 2320, gs: 1000, php: 975 },
+        { cp: 1080, gs: 500,  php: 490 },
+        { cp: 648,  gs: 300,  php: 294 },
+        { cp: 416,  gs: 200,  php: 196 },
+        { cp: 208,  gs: 100,  php: 98 },
+        { cp: 100,  gs: 50,   php: 49 },
+        { cp: 40,   gs: 20,   php: 21 },
+        { cp: 20,   gs: 10,   php: 11 }
+    ];
+
+    let db = JSON.parse(localStorage.getItem('drawDatabase')) || {};
+    let adminUnlocked = false;
+
+    function init() {
+        const adminGrid = document.getElementById('adminInputs');
+        const userChecks = document.getElementById('userChecklist');
+        for(let i=1; i<=10; i++) {
+            adminGrid.innerHTML += `<div><input type="number" class="admin-cp" data-idx="${i-1}" placeholder="Draw ${i}"></div>`;
+            userChecks.innerHTML += `<label class="check-item"><input type="checkbox" class="user-check" data-idx="${i-1}"><span>Draw ${i}</span></label>`;
+        }
+        refreshUI();
+    }
+
+    function handleCalculation() {
+        const btn = document.getElementById('calcBtn');
+        const originalText = btn.innerText;
+        
+        // Run Logic
+        const success = calculate();
+        
+        if (success !== false) {
+            btn.innerText = "Calculation Success!";
+            btn.classList.add('btn-success');
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove('btn-success');
+            }, 1200);
+        }
+    }
+
+    function showPanel(type) {
+        if (type === 'admin' && !adminUnlocked) {
+            if (prompt("Admin Password:") === "Ryzen2026") adminUnlocked = true;
+            else return;
+        }
+        document.getElementById('panelUser').classList.toggle('hidden', type !== 'user');
+        document.getElementById('panelAdmin').classList.toggle('hidden', type !== 'admin');
+        document.getElementById('btnUser').classList.toggle('active', type === 'user');
+        document.getElementById('btnAdmin').classList.toggle('active', type === 'admin');
+    }
+
+    function lockAdmin() { adminUnlocked = false; showPanel('user'); }
+
+    function resetCalculator() {
+        document.querySelectorAll('.user-check').forEach(c => c.checked = false);
+        updateDisplay(0,0,0,"", 0,0,"", false);
+    }
+
+    function saveToDb() {
+        const name = document.getElementById('adminDrawName').value.trim();
+        if(!name) return;
+        db[name] = Array.from(document.querySelectorAll('.admin-cp')).map(i => parseInt(i.value) || 0);
+        localStorage.setItem('drawDatabase', JSON.stringify(db));
+        refreshUI();
+        alert("Template Saved.");
+    }
+
+    function refreshUI() {
+        const sel = document.getElementById('userSelector');
+        const delList = document.getElementById('adminDeleteList');
+        sel.innerHTML = Object.keys(db).length ? '' : '<option>No Templates Found</option>';
+        delList.innerHTML = '';
+        Object.keys(db).forEach(name => {
+            sel.innerHTML += `<option value="${name}">${name}</option>`;
+            delList.innerHTML += `<div class="template-item"><span>${name}</span><button class="btn btn-reset" style="width:auto; padding:5px 10px; margin:0;" onclick="deleteTemplate('${name}')">X</button></div>`;
+        });
+    }
+
+    function deleteTemplate(name) {
+        if(confirm("Delete?")) { delete db[name]; localStorage.setItem('drawDatabase', JSON.stringify(db)); refreshUI(); }
+    }
+
+    function getCheapestCombo(targetCP) {
+        if (targetCP <= 0) return { gs: 0, php: 0, counts: {} };
+        let gsBase = 0, phpBase = 0, initialCounts = {};
+        let reducedCP = targetCP;
+        while(reducedCP > 2500) {
+            gsBase += 1000; phpBase += 975; reducedCP -= 2320;
+            initialCounts[1000] = (initialCounts[1000] || 0) + 1;
+        }
+        let maxSearch = reducedCP + 2320;
+        let dp = new Array(maxSearch + 1).fill(Infinity);
+        let parent = new Array(maxSearch + 1).fill(null);
+        dp[0] = 0;
+        for (let i = 0; i < maxSearch; i++) {
+            if (dp[i] === Infinity) continue;
+            for (let t of TIERS) {
+                let next = i + t.cp;
+                if (next <= maxSearch) {
+                    if (dp[i] + t.php < dp[next]) {
+                        dp[next] = dp[i] + t.php;
+                        parent[next] = { tier: t, prev: i };
+                    }
+                }
+            }
+        }
+        let bestIdx = reducedCP;
+        for (let i = reducedCP; i <= maxSearch; i++) {
+            if (dp[i] < dp[bestIdx]) bestIdx = i;
+        }
+        let curr = bestIdx;
+        let finalGS = gsBase, finalPHP = phpBase, finalCounts = {...initialCounts};
+        while (curr > 0 && parent[curr]) {
+            let t = parent[curr].tier;
+            finalGS += t.gs; finalPHP += t.php;
+            finalCounts[t.gs] = (finalCounts[t.gs] || 0) + 1;
+            curr = parent[curr].prev;
+        }
+        return { gs: finalGS, php: finalPHP, counts: finalCounts };
+    }
+
+    function getAltCombo(targetCP) {
+        if (targetCP <= 0) return { gs: 0, php: 0, counts: {} };
+        let raw = targetCP / 2320;
+        let rounded = Math.ceil(raw * 10) / 10;
+        let targetGS = Math.round(rounded * 1000);
+        let remain = targetGS, php = 0, counts = {};
+        for (let t of TIERS) {
+            while (remain >= t.gs) {
+                php += t.php; remain -= t.gs;
+                counts[t.gs] = (counts[t.gs] || 0) + 1;
+            }
+        }
+        return { gs: targetGS, php: php, counts: counts };
+    }
+
+    function calculate() {
+        const name = document.getElementById('userSelector').value;
+        if(!name || !db[name]) {
+            alert("Please select a series.");
+            return false;
+        }
+        
+        let totalCP = 0;
+        let selectedIndices = [];
+        document.querySelectorAll('.user-check').forEach((c, i) => { 
+            if(c.checked) {
+                totalCP += db[name][i];
+                selectedIndices.push(i);
+            }
+        });
+        
+        if (totalCP === 0) {
+            updateDisplay(0,0,0,"",0,0,"", false);
+            return true;
+        }
+        const onlyLowDraws = selectedIndices.every(idx => idx <= 1);
+
+        const optimized = getCheapestCombo(totalCP);
+        const alternative = getAltCombo(totalCP);
+
+        const buildBD = (counts) => Object.entries(counts).sort((a,b)=>b[0]-a[0])
+            .map(([gs, c]) => `<b>${c}x</b> ${gs} GS`).join(" + ");
+
+        updateDisplay(totalCP, optimized.gs, optimized.php, buildBD(optimized.counts), 
+                      alternative.gs, alternative.php, buildBD(alternative.counts), !onlyLowDraws);
+        return true;
+    }
+
+    function updateDisplay(cp, gs, php, bd, ags, aphp, abd, showAlt) {
+        document.getElementById('resCP').innerText = cp.toLocaleString() + ' CP';
+        document.getElementById('resGS').innerText = gs.toLocaleString() + ' GS';
+        document.getElementById('resPHP').innerText = php.toLocaleString(undefined, {minimumFractionDigits: 2});
+        document.getElementById('gsBreakdown').innerHTML = "<b>Breakdown:</b> " + bd;
+        
+        document.getElementById('altGS').innerText = ags.toLocaleString() + ' GS';
+        document.getElementById('altPHP').innerText = aphp.toLocaleString(undefined, {minimumFractionDigits: 2});
+        document.getElementById('altBreakdown').innerHTML = "<b>Breakdown:</b> " + abd;
+        
+        document.getElementById('altCard').classList.toggle('hidden', !showAlt);
+    }
+
+    function toggleTheme() {
+        document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    }
+
+    init();
+</script>
+</body>
+</html>
