@@ -255,6 +255,12 @@
   		Email us at: ryzendiscountedgamecredits@gmail.com 
         </div>
 
+	</div> <!-- ✅ ADD THIS to close panelUser -->
+
+	<div id="panelAdmin" class="card hidden">
+ 	 ...
+	</div>
+
         <div id="panelAdmin" class="card hidden">
             <h2 style="margin:0;">Database Admin</h2>
             <button class="btn btn-reset" style="width: auto; padding: 5px 10px; float: right;" onclick="lockAdmin()">Lock</button>
@@ -280,7 +286,36 @@
         { cp: 20,   gs: 10,   php: 11 }
     ];
 
-    let db = JSON.parse(localStorage.getItem('drawDatabase')) || {};
+    let db = JSON.parse(localStorage.getItem('drawDatabase')) ||  || { ...defaults... };
+
+const DEFAULT_DB = {
+	"Armed to the Teeth Draw": [10, 40, 45, 200, 350, 560, 800, 1500, 1900, 2700],
+	"Astronomy's Heart Draw": [10, 30, 50, 90, 190, 490, 690, 1500, 2900, 3400],
+	"Bitter Cold Draw": [10, 30, 60, 140, 240, 450, 750, 1500, 2700, 3800],
+	"Boba Blaster Draw": [10, 30, 50, 70, 190, 290, 590, 1800, 2500, 3000],
+	"Crown of Kings Draw": [10, 30, 80, 150, 270, 400, 750, 1550, 2600, 3900],
+	"Dragonfire Draw": [10, 30, 50, 150, 250, 400, 700, 1100, 1500, 2100],
+	"Galaxy Scourge Mythic Drop": [20, 40, 70, 120, 300, 600, 900, 1600, 3300, 4500],
+	"Grim Ending Mythic Drop": [20, 40, 70, 90, 190, 440, 790, 2100, 3100, 4100],
+	"Hot and Cold Draw": [10, 60, 180, 400, 800, 1500, 2300, 0, 0, 0],
+   	"On Ice Draw": [10, 60, 180, 400, 800, 1500, 2300, 0, 0, 0],
+	"Primeval Wetlands Remix via Advanced Purchase": [24, 68, 115, 344, 575, 915, 1440, 2080, 3040, 4800],
+  // ...keep the rest of your defaults here...
+};
+
+function loadDb() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("drawDatabase") || "null");
+    if (saved && Object.keys(saved).length > 0) return saved;   // ✅ use saved if not empty
+  } catch (e) {}
+  localStorage.setItem("drawDatabase", JSON.stringify(DEFAULT_DB)); // ✅ seed defaults
+  return { ...DEFAULT_DB };
+}
+
+let db = loadDb();
+
+
+
     let adminUnlocked = false;
 
     function init() {
@@ -288,7 +323,7 @@
         const userChecks = document.getElementById('userChecklist');
         for(let i=1; i<=10; i++) {
             adminGrid.innerHTML += `<div><input type="number" class="admin-cp" data-idx="${i-1}" placeholder="Draw ${i}"></div>`;
-            userChecks.innerHTML += `<label class="check-item"><input type="checkbox" class="user-check" data-idx="${i-1}"><span>Draw ${i}</span></label>`;
+            userChecks.innerHTML += `<label class="check-item"><input type="checkbox" class="user-check" data-idx="${i-1}" checked><span>Draw ${i}</span></label>`;
         }
         refreshUI();
     }
@@ -457,7 +492,8 @@
         document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     }
 
-    init();
+    window.addEventListener("DOMContentLoaded", init);
+
 </script>
 </body>
 </html>
