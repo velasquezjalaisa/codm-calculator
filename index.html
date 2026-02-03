@@ -366,6 +366,56 @@
     .choice input { width: auto; margin: 0; transform: scale(1.1); }
     .choice b { font-size: 0.85rem; }
     .choice small { display:block; opacity: 0.9; font-weight: 600; margin-top:2px; }
+  
+    /* ✅ Step 3 Choice Cards Full Black Text */
+    .choice {
+      background: #ffffff !important;
+    }
+
+    .choice b,
+    .choice small {
+      color: #000 !important;
+    }
+
+  
+    /* ✅ CTA Button Color Update */
+    .btn-cta {
+      background: #ffdf01 !important;
+      color: #000 !important;
+      font-weight: 900;
+    }
+
+
+    /* ✅ Shining Glow Effect for CTA Order Button */
+    .btn.btn-cta{
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 12px rgba(255,223,1,0.55),
+                  0 0 28px rgba(255,223,1,0.35);
+    }
+    .btn.btn-cta::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-70%;
+      width:55%;
+      height:100%;
+      background: rgba(255,255,255,0.45);
+      transform: skewX(-25deg);
+    }
+    .btn.btn-cta:hover::before{
+      animation: shineMove 0.9s ease;
+    }
+    @keyframes shineMove{
+      from{ left:-70%; }
+      to{ left:130%; }
+    }
+    .btn.btn-cta:hover{
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 18px rgba(255,223,1,0.85),
+                  0 0 45px rgba(255,223,1,0.65);
+    }
+
   </style>
 </head>
 
