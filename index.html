@@ -184,7 +184,6 @@
     }
     .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--teal-dark); }
 
-    /* Success state for button */
     .btn.btn-success {
       background: var(--success);
       box-shadow: 0 4px 0 #166534;
@@ -225,6 +224,148 @@
       display: flex; justify-content: space-between; align-items: center;
       padding: 10px; background: var(--bg-color); border-radius: 8px; margin-bottom: 5px;
     }
+
+    /* ====== Step Cards UI Upgrade ====== */
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      margin-bottom: 14px;
+    }
+
+    .step-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .step-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .step-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--teal-primary);
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 6px 14px rgba(0,128,128,0.22);
+      flex: 0 0 auto;
+    }
+
+    .step-title {
+      margin: 0;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .step-sub {
+      margin: 2px 0 0 0;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .step-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--teal-light);
+      border: 1px solid var(--border-color);
+      color: var(--text-dark);
+    }
+
+    .checklist-wrap {
+      max-height: 360px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .checklist-wrap::-webkit-scrollbar { width: 8px; }
+    .checklist-wrap::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 999px;
+    }
+
+    .check-item { justify-content: flex-start; gap: 10px; user-select: none; }
+    .check-item span { font-weight: 800; color: var(--text-dark); }
+
+    .card-row { display: grid; gap: 12px; }
+    @media (min-width: 520px) { .card-row { grid-template-columns: 1fr 1fr; } }
+
+    .result-card { padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.18); margin-top: 0; }
+
+    .result-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .result-title h3 {
+      margin: 0;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 900;
+      opacity: 0.95;
+      color: #fff;
+    }
+
+    .result-pill {
+      font-size: 0.7rem;
+      font-weight: 900;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+    }
+
+    .cta-card {
+      background: linear-gradient(135deg, var(--teal-primary), var(--teal-dark));
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .cta-card p { margin: 8px 0 0 0; opacity: 0.9; font-weight: 600; font-size: 0.9rem; }
+
+    .btn-cta { background: #ffffff; color: #0f172a; box-shadow: none; margin-top: 14px; }
+    .btn-cta:hover { filter: brightness(0.95); }
+
+    .choice-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .choice {
+      flex: 1 1 180px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      cursor: pointer;
+      user-select: none;
+    }
+    .choice input { width: auto; margin: 0; transform: scale(1.1); }
+    .choice b { font-size: 0.85rem; }
+    .choice small { display:block; opacity: 0.9; font-weight: 600; margin-top:2px; }
   </style>
 </head>
 
@@ -246,33 +387,127 @@
 
   <div class="main-container">
 
-    <!-- USER PANEL -->
     <div id="panelUser" class="card">
       <h2>Draw Calculator</h2>
 
-      <label>Select Draw:</label>
-      <select id="userSelector"></select>
+      <div class="step-card">
+        <div class="step-head">
+          <div class="step-left">
+            <div class="step-badge">1</div>
+            <div>
+              <p class="step-title">Select Draw</p>
+              <p class="step-sub">Choose the lucky draw template you want to calculate.</p>
+            </div>
+          </div>
+          <div class="step-actions">
+            <span class="chip">Required</span>
+          </div>
+        </div>
 
-      <div id="userChecklist"></div>
-
-      <button class="btn" id="calcBtn" onclick="handleCalculation()">Run Calculator</button>
-
-      <div class="stats-box">
-        <label style="color:rgba(255,255,255,0.8); font-size: 0.7rem; text-transform: uppercase;">Optimized Cost</label>
-        <div class="stat-row"><span>CP:</span> <span id="resCP">0 CP</span></div>
-        <div class="stat-row"><span>GS:</span> <span id="resGS">0 GS</span></div>
-        <div class="stat-total">₱<span id="resPHP">0.00</span></div>
-        <div id="gsBreakdown" class="breakdown">Selection results will appear here.</div>
+        <label style="margin-top:6px;">Template Selection</label>
+        <select id="userSelector"></select>
       </div>
 
-      <div id="altCard" class="alt-box hidden">
-        <label style="color:rgba(255,255,255,0.8); font-size: 0.7rem; text-transform: uppercase;">Alternative (Tenths Rule)</label>
-        <div class="stat-row"><span>GS:</span> <span id="altGS">0 GS</span></div>
-        <div class="stat-total">₱<span id="altPHP">0.00</span></div>
-        <div id="altBreakdown" class="breakdown">Breakdown here.</div>
+      <div class="step-card">
+        <div class="step-head">
+          <div class="step-left">
+            <div class="step-badge">2</div>
+            <div>
+              <p class="step-title">Choose Draws</p>
+              <p class="step-sub">Tick the draw numbers you plan to buy.</p>
+            </div>
+          </div>
+          <div class="step-actions">
+            <span class="chip">1–10</span>
+            <span class="chip">Multiple</span>
+          </div>
+        </div>
+
+        <label class="check-item" style="margin-bottom:10px;">
+          <input type="checkbox" id="selectAllDraws" />
+          <span>Select All Draws (1–10)</span>
+        </label>
+
+        <div class="checklist-wrap">
+          <div id="userChecklist"></div>
+        </div>
+
+        <button class="btn" id="calcBtn" onclick="handleCalculation()">Run Calculator</button>
       </div>
 
-      <button class="btn btn-reset" onclick="resetCalculator()">Reset Calculator</button>
+      <div class="step-card">
+        <div class="step-head">
+          <div class="step-left">
+            <div class="step-badge">✓</div>
+            <div>
+              <p class="step-title">Results</p>
+              <p class="step-sub">Use Optimized Cost for best value. Alternative uses the Tenths Rule.</p>
+            </div>
+          </div>
+          <div class="step-actions">
+            <button class="btn btn-reset" style="width:auto; padding:10px 14px; margin:0;" onclick="resetCalculator()">Reset</button>
+          </div>
+        </div>
+
+        <div class="card-row">
+          <div class="stats-box result-card">
+            <div class="result-title">
+              <h3>Optimized Cost</h3>
+              <span class="result-pill">Best Value</span>
+            </div>
+
+            <div class="stat-row"><span>CP:</span> <span id="resCP">0 CP</span></div>
+            <div class="stat-row"><span>GS:</span> <span id="resGS">0 GS</span></div>
+            <div class="stat-total">₱<span id="resPHP">0.00</span></div>
+            <div id="gsBreakdown" class="breakdown">Selection results will appear here.</div>
+          </div>
+
+          <div id="altCard" class="alt-box result-card hidden">
+            <div class="result-title">
+              <h3>Alternative</h3>
+              <span class="result-pill">Tenths Rule</span>
+            </div>
+
+            <div class="stat-row"><span>GS:</span> <span id="altGS">0 GS</span></div>
+            <div class="stat-total">₱<span id="altPHP">0.00</span></div>
+            <div id="altBreakdown" class="breakdown">Breakdown here.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card cta-card">
+        <div class="step-head" style="margin-bottom: 0;">
+          <div class="step-left">
+            <div class="step-badge" style="background:#fff; color:#0f172a;">3</div>
+            <div>
+              <p class="step-title" style="color:#fff;">Order Now!</p>
+              <p class="step-sub" style="color:rgba(255,255,255,0.9);">Choose the cost option, then send your order note.</p>
+            </div>
+          </div>
+        </div>
+
+        <p>Select which result you want to use for ordering:</p>
+
+        <div class="choice-row">
+          <label class="choice">
+            <input type="radio" name="costChoice" value="optimized" checked />
+            <div>
+              <b>Optimized Cost</b>
+              <small>Best value combo</small>
+            </div>
+          </label>
+
+          <label class="choice" id="altChoiceWrap">
+            <input type="radio" name="costChoice" value="alternative" />
+            <div>
+              <b>Alternative</b>
+              <small>Tenths Rule</small>
+            </div>
+          </label>
+        </div>
+
+        <button class="btn btn-cta" onclick="orderNow()">ORDER NOW!</button>
+      </div>
 
       <div class="footer-note">
         Top up your CODM CP at discounted prices only at <br><b>Ryzen Discounted Game Credits!</b><br>
@@ -285,9 +520,7 @@
         Email us at: ryzendiscountedgamecredits@gmail.com
       </div>
     </div>
-    <!-- ✅ IMPORTANT: panelUser is now properly CLOSED -->
 
-    <!-- ADMIN PANEL -->
     <div id="panelAdmin" class="card hidden">
       <h2 style="margin:0;">Database Admin</h2>
       <button class="btn btn-reset" style="width: auto; padding: 5px 10px; float: right;" onclick="lockAdmin()">Lock</button>
@@ -312,33 +545,20 @@
       { cp: 1080, gs: 500,  php: 490 },
       { cp: 648,  gs: 300,  php: 294 },
       { cp: 416,  gs: 200,  php: 196 },
-      { cp: 208,  gs: 100,  php: 98  },
-      { cp: 100,  gs: 50,   php: 49  },
-      { cp: 40,   gs: 20,   php: 21  },
-      { cp: 20,   gs: 10,   php: 11  }
+      { cp: 208,  gs: 100,  php: 98 },
+      { cp: 100,  gs: 50,   php: 49 },
+      { cp: 40,   gs: 20,   php: 21 },
+      { cp: 20,   gs: 10,   php: 11 }
     ];
 
-    // ✅ Seed templates if localStorage is missing OR empty ("{}")
-    // Replace/add your real templates here so GitHub Pages shows options on first load.
     const DEFAULT_DB = {
-        "Armed to the Teeth Draw": [10, 40, 45, 200, 350, 560, 800, 1500, 1900, 2700],
-	    "Astronomy's Heart Draw": [10, 30, 50, 90, 190, 490, 690, 1500, 2900, 3400],
-	    "Bitter Cold Draw": [10, 30, 60, 140, 240, 450, 750, 1500, 2700, 3800],
-	    "Boba Blaster Draw": [10, 30, 50, 70, 190, 290, 590, 1800, 2500, 3000],
-	    "Crown of Kings Draw": [10, 30, 80, 150, 270, 400, 750, 1550, 2600, 3900],
-	    "Dragonfire Draw": [10, 30, 50, 150, 250, 400, 700, 1100, 1500, 2100],
-	    "Galaxy Scourge Mythic Drop": [20, 40, 70, 120, 300, 600, 900, 1600, 3300, 4500],
-	    "Grim Ending Mythic Drop": [20, 40, 70, 90, 190, 440, 790, 2100, 3100, 4100],
-	    "Hot and Cold Draw": [10, 60, 180, 400, 800, 1500, 2300, 0, 0, 0],
-		"Mystic Jade Mythic Drop": [20, 40, 70, 90, 190, 440, 790, 2100, 3100, 4100],
-       	"On Ice Draw": [10, 60, 180, 400, 800, 1500, 2300, 0, 0, 0],
-	    "Primeval Wetlands Remix via Advanced Purchase": [24, 68, 115, 344, 575, 915, 1440, 2080, 3040, 4800]
+      "Sample Template (Edit Me)": [30, 80, 120, 200, 320, 520, 800, 1300, 2000, 2800]
     };
 
     function loadDb() {
       try {
         const saved = JSON.parse(localStorage.getItem('drawDatabase') || 'null');
-        if (saved && Object.keys(saved).length > 0) return saved; // use saved if not empty
+        if (saved && Object.keys(saved).length > 0) return saved;
       } catch (e) {}
       localStorage.setItem('drawDatabase', JSON.stringify(DEFAULT_DB));
       return { ...DEFAULT_DB };
@@ -350,22 +570,49 @@
     function init() {
       const adminGrid = document.getElementById('adminInputs');
       const userChecks = document.getElementById('userChecklist');
+      const selectAll = document.getElementById('selectAllDraws');
 
-      // Safety: if DOM nodes aren't found, stop and show a clear message.
-      if (!adminGrid || !userChecks) {
-        alert("UI failed to load: missing elements. Please check HTML structure.");
-        return;
-      }
+      if (!adminGrid || !userChecks || !selectAll) return;
 
-      adminGrid.innerHTML = "";
-      userChecks.innerHTML = "";
+      adminGrid.innerHTML = '';
+      userChecks.innerHTML = '';
 
       for (let i = 1; i <= 10; i++) {
         adminGrid.innerHTML += `<div><input type="number" class="admin-cp" data-idx="${i-1}" placeholder="Draw ${i}"></div>`;
-        userChecks.innerHTML += `<label class="check-item"><input type="checkbox" class="user-check" data-idx="${i-1}" checked><span>Draw ${i}</span></label>`;
+        userChecks.innerHTML += `<label class="check-item"><input type="checkbox" class="user-check" data-idx="${i-1}"><span>Draw ${i}</span></label>`;
       }
 
+      selectAll.addEventListener('change', () => {
+        const checked = selectAll.checked;
+        document.querySelectorAll('.user-check').forEach(c => c.checked = checked);
+      });
+
+      userChecks.addEventListener('change', () => { syncSelectAll(); });
+
       refreshUI();
+      syncSelectAll();
+      syncAltChoiceAvailability(false);
+    }
+
+    function syncSelectAll() {
+      const selectAll = document.getElementById('selectAllDraws');
+      const checks = Array.from(document.querySelectorAll('.user-check'));
+      if (!selectAll || !checks.length) return;
+      selectAll.checked = checks.every(c => c.checked);
+    }
+
+    function syncAltChoiceAvailability(showAlt) {
+      const altWrap = document.getElementById('altChoiceWrap');
+      const altRadio = document.querySelector('input[name="costChoice"][value="alternative"]');
+      if (!altWrap || !altRadio) return;
+
+      altRadio.disabled = !showAlt;
+      altWrap.style.opacity = showAlt ? "1" : "0.55";
+      altWrap.style.cursor = showAlt ? "pointer" : "not-allowed";
+
+      if (!showAlt && altRadio.checked) {
+        document.querySelector('input[name="costChoice"][value="optimized"]').checked = true;
+      }
     }
 
     function handleCalculation() {
@@ -400,13 +647,19 @@
 
     function resetCalculator() {
       document.querySelectorAll('.user-check').forEach(c => c.checked = false);
-      updateDisplay(0, 0, 0, "", 0, 0, "", false);
+      const selectAll = document.getElementById('selectAllDraws');
+      if (selectAll) selectAll.checked = false;
+
+      const opt = document.querySelector('input[name="costChoice"][value="optimized"]');
+      if (opt) opt.checked = true;
+
+      updateDisplay(0,0,0,"", 0,0,"", false);
+      syncAltChoiceAvailability(false);
     }
 
     function saveToDb() {
       const name = document.getElementById('adminDrawName').value.trim();
-      if (!name) return;
-
+      if(!name) return;
       db[name] = Array.from(document.querySelectorAll('.admin-cp')).map(i => parseInt(i.value) || 0);
       localStorage.setItem('drawDatabase', JSON.stringify(db));
       refreshUI();
@@ -416,12 +669,10 @@
     function refreshUI() {
       const sel = document.getElementById('userSelector');
       const delList = document.getElementById('adminDeleteList');
-
       sel.innerHTML = '';
       delList.innerHTML = '';
 
       const names = Object.keys(db);
-
       if (!names.length) {
         sel.innerHTML = '<option value="">No Templates Found</option>';
         return;
@@ -429,40 +680,26 @@
 
       names.forEach(name => {
         sel.innerHTML += `<option value="${name}">${name}</option>`;
-        delList.innerHTML += `
-          <div class="template-item">
-            <span>${name}</span>
-            <button class="btn btn-reset" style="width:auto; padding:5px 10px; margin:0;" onclick="deleteTemplate('${name.replace(/'/g, "\\'")}')">X</button>
-          </div>`;
+        delList.innerHTML += `<div class="template-item"><span>${name}</span><button class="btn btn-reset" style="width:auto; padding:5px 10px; margin:0;" onclick="deleteTemplate('${name.replace(/'/g, "\'")}')">X</button></div>`;
       });
     }
 
     function deleteTemplate(name) {
-      if (confirm("Delete?")) {
-        delete db[name];
-        localStorage.setItem('drawDatabase', JSON.stringify(db));
-        refreshUI();
-      }
+      if(confirm("Delete?")) { delete db[name]; localStorage.setItem('drawDatabase', JSON.stringify(db)); refreshUI(); }
     }
 
     function getCheapestCombo(targetCP) {
       if (targetCP <= 0) return { gs: 0, php: 0, counts: {} };
-
       let gsBase = 0, phpBase = 0, initialCounts = {};
       let reducedCP = targetCP;
-
-      while (reducedCP > 2500) {
-        gsBase += 1000;
-        phpBase += 975;
-        reducedCP -= 2320;
+      while(reducedCP > 2500) {
+        gsBase += 1000; phpBase += 975; reducedCP -= 2320;
         initialCounts[1000] = (initialCounts[1000] || 0) + 1;
       }
-
       let maxSearch = reducedCP + 2320;
       let dp = new Array(maxSearch + 1).fill(Infinity);
       let parent = new Array(maxSearch + 1).fill(null);
       dp[0] = 0;
-
       for (let i = 0; i < maxSearch; i++) {
         if (dp[i] === Infinity) continue;
         for (let t of TIERS) {
@@ -475,23 +712,18 @@
           }
         }
       }
-
       let bestIdx = reducedCP;
       for (let i = reducedCP; i <= maxSearch; i++) {
         if (dp[i] < dp[bestIdx]) bestIdx = i;
       }
-
       let curr = bestIdx;
-      let finalGS = gsBase, finalPHP = phpBase, finalCounts = { ...initialCounts };
-
+      let finalGS = gsBase, finalPHP = phpBase, finalCounts = {...initialCounts};
       while (curr > 0 && parent[curr]) {
         let t = parent[curr].tier;
-        finalGS += t.gs;
-        finalPHP += t.php;
+        finalGS += t.gs; finalPHP += t.php;
         finalCounts[t.gs] = (finalCounts[t.gs] || 0) + 1;
         curr = parent[curr].prev;
       }
-
       return { gs: finalGS, php: finalPHP, counts: finalCounts };
     }
 
@@ -501,11 +733,9 @@
       let rounded = Math.ceil(raw * 10) / 10;
       let targetGS = Math.round(rounded * 1000);
       let remain = targetGS, php = 0, counts = {};
-
       for (let t of TIERS) {
         while (remain >= t.gs) {
-          php += t.php;
-          remain -= t.gs;
+          php += t.php; remain -= t.gs;
           counts[t.gs] = (counts[t.gs] || 0) + 1;
         }
       }
@@ -514,71 +744,139 @@
 
     function calculate() {
       const name = document.getElementById('userSelector').value;
-      if (!name || !db[name]) {
+      if(!name || !db[name]) {
         alert("Please select a series.");
         return false;
       }
 
       let totalCP = 0;
       let selectedIndices = [];
-
       document.querySelectorAll('.user-check').forEach((c, i) => {
-        if (c.checked) {
-          totalCP += db[name][i] || 0;
+        if(c.checked) {
+          totalCP += (db[name][i] || 0);
           selectedIndices.push(i);
         }
       });
 
+      syncSelectAll();
+
       if (totalCP === 0) {
-        updateDisplay(0, 0, 0, "", 0, 0, "", false);
+        updateDisplay(0,0,0,"",0,0,"", false);
+        syncAltChoiceAvailability(false);
         return true;
       }
-
       const onlyLowDraws = selectedIndices.every(idx => idx <= 1);
 
       const optimized = getCheapestCombo(totalCP);
       const alternative = getAltCombo(totalCP);
 
-      const buildBD = (counts) => Object.entries(counts)
-        .sort((a, b) => b[0] - a[0])
-        .map(([gs, c]) => `<b>${c}x</b> ${gs} GS`)
-        .join(" + ");
+      const buildBD = (counts) => Object.entries(counts).sort((a,b)=>b[0]-a[0])
+        .map(([gs, c]) => `<b>${c}x</b> ${gs} GS`).join(" + ");
 
-      updateDisplay(
-        totalCP,
-        optimized.gs, optimized.php, buildBD(optimized.counts),
-        alternative.gs, alternative.php, buildBD(alternative.counts),
-        !onlyLowDraws
-      );
+      const showAlt = !onlyLowDraws;
 
+      updateDisplay(totalCP, optimized.gs, optimized.php, buildBD(optimized.counts),
+                    alternative.gs, alternative.php, buildBD(alternative.counts), showAlt);
+
+      syncAltChoiceAvailability(showAlt);
       return true;
     }
 
     function updateDisplay(cp, gs, php, bd, ags, aphp, abd, showAlt) {
       document.getElementById('resCP').innerText = cp.toLocaleString() + ' CP';
       document.getElementById('resGS').innerText = gs.toLocaleString() + ' GS';
-      document.getElementById('resPHP').innerText = php.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('resPHP').innerText = php.toLocaleString(undefined, {minimumFractionDigits: 2});
       document.getElementById('gsBreakdown').innerHTML = "<b>Breakdown:</b> " + (bd || "—");
 
       document.getElementById('altGS').innerText = ags.toLocaleString() + ' GS';
-      document.getElementById('altPHP').innerText = aphp.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('altPHP').innerText = aphp.toLocaleString(undefined, {minimumFractionDigits: 2});
       document.getElementById('altBreakdown').innerHTML = "<b>Breakdown:</b> " + (abd || "—");
 
       document.getElementById('altCard').classList.toggle('hidden', !showAlt);
     }
 
     function toggleTheme() {
-      document.body.setAttribute(
-        'data-theme',
-        document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-      );
+      document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     }
 
-    // ✅ Important for GitHub Pages consistency
+    function getSelectedDrawsText() {
+      const indices = [];
+      document.querySelectorAll('.user-check').forEach((c, i) => { if (c.checked) indices.push(i+1); });
+      if (!indices.length) return "None";
+      return indices.join(", ");
+    }
+
+    function orderNow() {
+      const template = document.getElementById('userSelector')?.value || "";
+      const selectedDraws = getSelectedDrawsText();
+
+      const choice = document.querySelector('input[name="costChoice"]:checked')?.value || "optimized";
+      const altVisible = !document.getElementById('altCard')?.classList.contains('hidden');
+
+      const finalChoice = (choice === "alternative" && !altVisible) ? "optimized" : choice;
+
+      const totalCP = document.getElementById('resCP')?.innerText || "0 CP";
+
+      let lineTitle = "";
+      let lineCost = "";
+      let bdText = "";
+
+      if (finalChoice === "alternative") {
+        const gs = document.getElementById('altGS')?.innerText || "0 GS";
+        const php = document.getElementById('altPHP')?.innerText || "0.00";
+        lineTitle = "Alternative (Tenths Rule)";
+        lineCost = `${gs} | ₱${php}`;
+        bdText = document.getElementById('altBreakdown')?.innerText || "";
+      } else {
+        const gs = document.getElementById('resGS')?.innerText || "0 GS";
+        const php = document.getElementById('resPHP')?.innerText || "0.00";
+        lineTitle = "Optimized Cost";
+        lineCost = `${gs} | ₱${php}`;
+        bdText = document.getElementById('gsBreakdown')?.innerText || "";
+      }
+
+      if (!template) {
+        alert("Please select a draw template first.");
+        return;
+      }
+
+      const msg =
+`Hi Ryzen! I want to order CODM CP.
+
+✅ Draw: ${template}
+✅ Selected Draws: ${selectedDraws}
+✅ Total CP: ${totalCP}
+✅ Using: ${lineTitle}
+✅ Cost: ${lineCost}
+
+${bdText ? bdText : ""}
+
+(Please confirm availability & ETA. Thank you!)`;
+
+      const proceed = confirm(
+        "You're about to open Messenger.\n\nWe will copy your order note so you can paste it into the chat.\n\nContinue?"
+      );
+      if (!proceed) return;
+
+      const openMessenger = () => window.open("https://m.me/ryzendiscountedgamecredits", "_blank");
+
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(msg).then(() => {
+          openMessenger();
+          alert("✅ Order note copied!\nGo ahead and PASTE the order note in Messenger to place your order.");
+        }).catch(() => {
+          openMessenger();
+          prompt("Copy this message and paste it in Messenger:", msg);
+          alert("✅ After copying, paste the order note in Messenger to place your order.");
+        });
+      } else {
+        openMessenger();
+        prompt("Copy this message and paste it in Messenger:", msg);
+        alert("✅ After copying, paste the order note in Messenger to place your order.");
+      }
+    }
+
     window.addEventListener("DOMContentLoaded", init);
   </script>
 </body>
 </html>
-
-
-
