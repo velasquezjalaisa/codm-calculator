@@ -717,17 +717,17 @@ footer strong, footer a { color: #e50914 !important; }
 
   <div class="header-wrapper">
     <div class="brand-info">
-      <h1 class="brand-title">Ryzen Discounted Game Credits<span class="verified-badge">✔</span></h1>
-      <span class="brand-subtitle">Precision Credits Engine</span>
+      <h1 class="brand-title">CODM Draw Calculator<span class="verified-badge">✔</span></h1>
+      <span class="brand-subtitle">Credits engine for credx.ph resellers.</span>
     </div>
-    <a href="https://www.facebook.com/RyzenDiscountedGameCredits/">
-    <img src="Logo_Default.png" alt="Ryzen Logo" class="official-logo" />
+    <a href="https://credx.ph/codm-cp-top-up-ph/">
+    <img src="Logo_Default.png" alt="credx logo" class="official-logo" />
     </a>
     <img src="CODM_Logo.png" alt="CODM Logo" class="official-logo" />
   </div>
 
   <div class="mode-switch">
-    <button id="btnUser" class="mode-btn active" onclick="showPanel('user')">User</button>
+    <button id="btnUser" class="mode-btn active" onclick="showPanel('user')">Home</button>
     <button id="btnAdmin" class="mode-btn" onclick="showPanel('admin')">Admin 🔒</button>
     
   </div>
@@ -735,7 +735,6 @@ footer strong, footer a { color: #e50914 !important; }
   <div class="main-container">
 
     <div id="panelUser">
-      <h2>Draw Calculator</h2>
 
       <div class="step-card">
         <div class="step-head">
@@ -1420,12 +1419,14 @@ footer strong, footer a { color: #e50914 !important; }
         input.focus();
         renderDrawSuggestions(true);
         return false;
+        <b></b> 
       }
       updateDrawCPLabels();
       updateDrawConfirmation();
       const status = document.getElementById('drawSearchStatus');
       if (status) status.textContent = '✓ Draw confirmed. You can continue to Step 2.';
       return true;
+  
     }
 
     function refreshUI() {
